@@ -24,33 +24,54 @@
 
     // once everything is loaded, we run our Three.js stuff.
     function init() {
+        /* 
+        THREE.Scene 객체 선언.
+        create a scene, that will hold all our elements such as objects, cameras and lights.
+        scene 객체는 렌더링할 모든 객체와 광원을 저장하는 데 쓰이는 컨테이너다.
+        scene 객체는 Three.js의 모든 컨테이너 객체와 마찬가지로 Object3D의 서브클래스이다.
+        scene 객체는 다른 객체들을 포함할 수 있으며, 이들은 모두 scene 객체의 자식 객체가 된다.
+        scene 객체는 자식 객체들을 렌더링할 때 사용되는 카메라와 광원을 포함한다.
+        scene 객체는 또한 자식 객체들을 렌더링할 때 사용되는 렌더러를 포함한다.
+        Three.scene 객체 없이는 Three.js의 모든 객체들을 렌더링할 수 없다.
 
-        // create a scene, that will hold all our elements such as objects, cameras and lights.
+        */
         var scene = new THREE.Scene();
 
         // create a camera, which defines where we're looking at.
+        /*
+        카메라 객체 선언.
+        카메라는 장면을 렌더링 했을 때 어떻게 보여질 것인지를 정의한다.    
+        */
         var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 
         // create a render and set the size
+        /*
+        renderer 객체 선언.
+        렌더러는 장면을 렌더링하는 역할을 한다.
+        렌더러는 scene 객체가 카메라 객체의 각도에 따라 브라우저에서 어떻게 보이는지를 산출하는 역할을 한다.
+        이 예제에서는 장면을 렌더링 하는 데 그래픽 카드를 사용하도록 WebGLRenderer 객체를 생성한다.
+        */
+        
         var renderer = new THREE.WebGLRenderer();
         renderer.setClearColorHex();
-        renderer.setClearColor(new THREE.Color(0xEEEEEE));
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(new THREE.Color(0xEEEEEE));  //레너러의 배경색을 흰색으로 설정
+        renderer.setSize(window.innerWidth, window.innerHeight); //장면의 크기 설정
 
         // show axes in the screen
         var axes = new THREE.AxisHelper(20);
-        scene.add(axes);
+        scene.add(axes); //scene 객체에 axes 객체 추가. 보조축을 추가하는 것이다. x,y,z축을 보여준다.
 
         // create the ground plane
-        var planeGeometry = new THREE.PlaneGeometry(60, 20);
-        var planeMaterial = new THREE.MeshBasicMaterial({color: 0xcccccc});
-        var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+        var planeGeometry = new THREE.PlaneGeometry(60, 20); //평면의 크기를 설정한다. 폭 60, 높이 20. 아직 평면을 생성한 것은 아니다.
+        var planeMaterial = new THREE.MeshBasicMaterial({color: 0xcccccc}); //평면의 재질을 설정한다. 색상은 회색
+        var plane = new THREE.Mesh(planeGeometry, planeMaterial);//평면의 크기와 재질을 인자로 받아 평면 객체를 생성한다.
 
         // rotate and position the plane
-        plane.rotation.x = -0.5 * Math.PI;
-        plane.position.x = 15;
-        plane.position.y = 0;
-        plane.position.z = 0;
+        // plane.rotation.x = -0.5 * Math.PI;
+        plane.rotation.x = -0.5 * Math.PI; //평면을 x축으로 -90도 회전시킨다. 즉, 평면을 수평으로 만든다.
+        plane.position.x = 15;//평면의 위치를 설정한다. x축으로 15만큼 이동시킨다.
+        plane.position.y = 0;//평면의 위치를 설정한다. y축으로 0만큼 이동시킨다.
+        plane.position.z = 0;//평면의 위치를 설정한다. z축으로 0만큼 이동시킨다.
 
         // add the plane to the scene
         scene.add(plane);
